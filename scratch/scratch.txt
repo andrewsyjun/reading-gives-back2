@@ -1,0 +1,68 @@
+{
+  tasks {
+    taskName
+    points
+    isActive
+    ageGroupId
+    ageGroup {
+      id
+      name
+      beginAge
+      endAge
+    }
+  }
+}
+
+
+,
+              {
+                $unwind: "$res3"
+              },
+              {
+                $match: {
+                  $or: [
+                    { $and: [{ 'res3.beginAge': { $lte: age }, 'res3.endAge': { $gte: age } }] },
+                    { $and: [{ 'res3.beginAge': -1, 'res3.endAge': -1 }] }
+                  ]
+                }
+              }
+
+{
+                  $or: [
+                    { $and: [{ "group.beginAge": { $lte: age }, "group.endAge": { $gte: age } }] },
+                    { $and: [{ "group.beginAge": -1, "group.endAge": -1 }] }
+                  ]
+                }
+,
+              {
+                "$addFields": {
+                  "res3": {
+                    "$arrayElemAt": [
+                      {
+                        "$filter": {
+                          "input": "$res3",
+                          "as": "group",
+                          "cond": {
+                            "$eq": ["$$group.beginAge", -1]
+                          }
+                        }
+                      }, 0
+                    ]
+                  }
+                }
+              }
+
+
+const stocks = [
+    { ticker: 'AAPL', currentPrice: 172.5 },
+    { ticker: 'ORCL', currentPrice: 51 },
+    { ticker: 'BRK.B', currentPrice: 202 },
+    { ticker: 'LMT', currentPrice: 360 }
+  ];
+
+const stockHoldings = [
+    { userId: users[0]._id, stock: 'AAPL', shares: 5, basePrice: 170 },
+    { userId: users[0]._id, stock: 'ORCL', shares: 10, basePrice: 50 },
+    { userId: users[1]._id, stock: 'BRK.B', shares: 5, basePrice: 200 },
+    { userId: users[1]._id, stock: 'LMT', shares: 5, basePrice: 370 }
+  ];

@@ -1,0 +1,62 @@
+{
+  tasks {
+    id
+    taskName
+    points
+    isActive
+    contributions {
+      id
+      title
+      userId
+      redeemed
+      redeemedDt
+      used
+      usedDt
+    }
+    ageGroupId
+    ageGroups {
+      id
+      name
+      beginAge
+      endAge
+    }
+  }
+}
+
+{
+  users {
+    id
+    name
+    userName
+    roleName
+    familyGroup {
+      id
+      name
+      lastName
+      address
+    }
+    ageGroups {
+      name
+      beginAge
+      endAge
+    }
+    books {
+      id
+      title
+      pagesRead
+      redeemed
+      redeemedDt
+      used
+      usedDt
+    }
+    contributions {
+      id
+      title
+      redeemed
+      redeemedDt
+      points
+      used
+      usedDt
+    }
+  }
+}

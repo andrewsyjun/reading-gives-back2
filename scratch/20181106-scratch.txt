@@ -1,0 +1,160 @@
+========================================================================================
+11/6/2018
+========================================================================================
+
+                return Task.aggregate([
+                  {
+                    $lookup: {
+                      from: "res3",
+                      let: { groupId: "$ageGroupIe" },
+                      pipeline: [
+                        {
+                          $match: {
+                            $expr: {
+                              $and: [{
+                                $or: [
+                                  { $and: [{ $lte: ["$beginAge", 15] }, { $gte: ["$endAge", 15] }] },
+                                  { $and: [{ $eq: ["$beginAge", -1] }, { $eq: ["$endAge", -1] }] }
+                                ]
+                              },
+                              { $eq: ["$id", "$$groupId"] }
+                              ]
+                            }
+                          }
+                        }
+                      ],
+                      as: "groups"
+                    }
+                  },
+                  {
+                    $project: { _id: 0, name: 1, beginAge: 1, endAge: 1 }
+                  },
+                  {
+                    $unwind: '$groups'
+                  }
+                ]).exec((err4, result) => {
+                  if (err4) {
+                    console.log("error", err4)
+                  }
+                  if (result) {
+                    console.log(result);
+                  }
+                });
+              
+================================================================================
+
+                return Task.aggregate([
+                  {
+                    $lookup:
+                    {
+                      from: "res3",
+                      localField: "ageGroupId",
+                      foreignField: "ageGroupId",
+                      as: "tasks"
+                    }
+                  }
+                ]);
+
+
+================================================================================
+aggregate([
+                  {
+                    $lookup:
+                    {
+                      from: "res3",
+                      localField: "ageGroupId",
+                      foreignField: "testId",
+                      as: "tasks"
+                    }
+                  }
+                ]).exec(function (err4, res4) {
+                  console.log(res4);
+                });
+        
+
+
+================================================================================
+
+        return User.findOne({ userName: args.userName })
+          .then(function (res) {
+            let bodYear = new Date(res.bod).getYear();
+            let currYear = new Date().getYear();
+            let age = 15;//currYear - bodYear;
+            return AgeGroup.find({
+              $or: [
+                { $and: [{ beginAge: { $lte: age } }, { endAge: { $gte: age } }] },
+                { $and: [{ beginAge: { $eq: -1 } }, { endAge: { $eq: -1 } }] }
+              ]
+            })
+              .then(function (res3) {
+                console.log(res3);
+                return Task.aggregate([
+                  {
+                    $lookup:
+                    {
+                      from: "res3",
+                      localField: "ageGroupId",
+                      foreignField: "testId",
+                      as: "groups"
+                    }
+                  }
+                ]).exec(function (err4, res4) {
+                  return res4.groups;
+                });
+              })
+          })
+      
+================================================================================    
+11/5/2018    
+================================================================================
+
+db.orders.insert([
+  { "_id" : 1, "item" : "almonds", "price" : 12, "ordered" : 2 },
+  { "_id" : 2, "item" : "pecans", "price" : 20, "ordered" : 1 },
+  { "_id" : 3, "item" : "cookies", "price" : 10, "ordered" : 60 }
+])
+
+db.warehouses.insert([
+  { "_id" : 1, "stock_item" : "almonds", warehouse: "A", "instock" : 120 },
+  { "_id" : 2, "stock_item" : "pecans", warehouse: "A", "instock" : 80 },
+  { "_id" : 3, "stock_item" : "almonds", warehouse: "B", "instock" : 60 },
+  { "_id" : 4, "stock_item" : "cookies", warehouse: "B", "instock" : 40 },
+  { "_id" : 5, "stock_item" : "cookies", warehouse: "A", "instock" : 80 }
+])
+
+
+
+                        $and: [{
+                          $or: [
+                            { $and: [{ $lte: ['$beginAge', age] }, { $gte: ['$endAge', age] }] },
+                            { $and: [{ $eq: ['$beginAge', -1] }, { $eq: ['$endAge', -1] }] }
+                          ]
+                        },
+                        { $eq: ['$ageGroupId', '$$ageGroupId'] }
+                        ]
+
+,
+                  { $project: { _id: 0, name: 1, beginAge: 1, endAge: 1 } }
+
+,
+            {
+              $unwind: '$groups'
+            }
+
+
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: {
+                        $and: [{
+                          $or: [
+                            { $and: [{ $lte: ["$beginAge", 15] }, { $gte: ["$endAge", 15] }] },
+                            { $and: [{ $eq: ["$beginAge", -1] }, { $eq: ["$endAge", -1] }] }
+                          ]
+                        },
+                        { $eq: ["$_id", "$$groupId"] }
+                        ]
+                      }
+                    }
+                  }
+                ]

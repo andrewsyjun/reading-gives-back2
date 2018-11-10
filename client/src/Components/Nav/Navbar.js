@@ -54,11 +54,29 @@ class Navbar extends Component {
 
   display(data) {
 
-    if (this.state.authenticated && data.user.roleName === "Parent") {
+    if (data.user.roleName.split(",").includes("Parent")) {
       return (
         <li className="nav-item">
           <Link className="nav-link" to="/review">
             Review
+      </Link>
+        </li>
+      )
+    } else {
+      return (
+        <li />
+      )
+    }
+
+  }
+
+  displayAdmin(data) {
+
+    if (data.user.roleName.split(",").includes("Admin")) {
+      return (
+        <li className="nav-item">
+          <Link className="nav-link" to="/admin">
+            Admin
       </Link>
         </li>
       )
@@ -128,6 +146,20 @@ class Navbar extends Component {
                   return (
                     <div>
                       {this.display(data)}
+                    </div>
+                  )
+                }
+                }
+              </Query >
+              <Query query={getUser}
+                variables={{ userName: this.state.userName }} >
+                {({ loading, error, data }) => {
+                  if (loading) return <div>Fetching</div>
+                  if (error) return <div>Error</div>
+
+                  return (
+                    <div>
+                      {this.displayAdmin(data)}
                     </div>
                   )
                 }

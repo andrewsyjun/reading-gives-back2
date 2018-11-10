@@ -51,7 +51,6 @@ const UserType = new GraphQLObjectType({
     familyGroup: {
       type: new GraphQLList(FamilyGroupType),
       resolve(parent, args) {
-        console.log("user: familyGroupId = " + args.familyGroupId);
         return FamilyGroup.find({ _id: parent.familyGroupId })
       }
     },
@@ -246,11 +245,13 @@ const RootQuery = new GraphQLObjectType({
         familyGroupId: { type: GraphQLString }
       },
       resolve(parent, args) {
+        console.log("in getActiveTasksQuery");
         return User.findOne({ userName: args.userName })
           .then(function (res) {
             let role = res.roleName;
-            if (role === "Parent") {
-              return Task.find({ isActive: true });
+            console.log("getActiveTasksQuery: role = " + role);
+            if (role.split(",").includes("Parent")) {
+              return Task.find({ isActive: true, familyGroupId: args.familyGroupId });
             } else {
               let bodYear = new Date(res.bod).getYear();
               let currYear = new Date().getYear();
@@ -417,22 +418,24 @@ const RootQuery = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    addUser: {
+    addUserMutation: {
       type: UserType,
       args: {
         name: { type: GraphQLString },
         userName: { type: GraphQLString },
         roleName: { type: GraphQLString },
-        createdDt: { type: GraphQLString }
+        bod: { type: GraphQLString },
+        familyGroupId: { type: GraphQLString }
       },
       resolve(parent, args) {
+        let roles = [];
+        roles.push(args.roleName);
         let user = new User({
           name: args.name,
           userName: args.userName,
-          roleName: args.roleName,
-          ageGroup: "",
-          familyGroup: "",
-          bod: "",
+          roleName: roles,
+          bod: args.bod,
+          familyGroupId: args.familyGroupId,
           createdDt: new Date()
         });
         return user.save();
@@ -455,7 +458,7 @@ const Mutation = new GraphQLObjectType({
         return ageGroup.save();
       }
     },
-    addFamilyGroup: {
+    addFamilyGroupMutation: {
       type: FamilyGroupType,
       args: {
         name: { type: GraphQLString },
@@ -597,7 +600,8 @@ const Mutation = new GraphQLObjectType({
       type: BookType,
       args: {
         bookId: { type: new GraphQLNonNull(GraphQLID) },
-        pagesRead: { type: new GraphQLNonNull(GraphQLInt) }
+        pagesRead: { type: new GraphQLNonNull(GraphQLInt) },
+        familyGroupId: { type: new GraphQLNonNull(GraphQLInt) }
       },
       resolve(parent, args) {
         return Book.findByIdAndUpdate(args.bookId, { $set: { pagesRead: args.pagesRead } },
@@ -606,7 +610,7 @@ const Mutation = new GraphQLObjectType({
             if (args.pagesRead === res.pageCount) {
               User.findById(res.userId,
                 function (err2, res2) {
-                  User.find({ roleName: "Parent" }, function (err3, res3) {
+                  User.find({ roleName: "Parent", familyGroupId: args.familyGroupId }, function (err3, res3) {
                     let emailer = new EmailSender();
                     emailer.sendApprovalRequestEmail(res2.name, res3);
                   })

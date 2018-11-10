@@ -89,7 +89,7 @@ class TaskList extends Component {
     if (this.props.getUser.loading) {
       addTaskPane = <div />;
     } else {
-      addTaskPane = (this.props.getUser.user.roleName === "Parent") ?
+      addTaskPane = (this.props.getUser.user.roleName.split(",").includes("Parent")) ?
         (
           <AddTask taskId={this.state.selected} userId={this.props.getUser.user.id} userName={this.props.userName} familyGroupId={this.props.getUser.user.familyGroupid} />
         ) : (

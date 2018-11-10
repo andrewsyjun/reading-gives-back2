@@ -319,7 +319,8 @@ class MyReadingLog extends Component {
       this.props.updatePagesRead({
         variables: {
           bookId: bookId,
-          pagesRead: parseInt(newValue, 10)
+          pagesRead: parseInt(newValue, 10),
+          familyGroupId: this.props.getUser.user.familyGroupId
         },
         refetchQueries: [{ query: getReadingLogQuery, variables: { userName: this.props.userName } }]
       });
@@ -333,7 +334,7 @@ class MyReadingLog extends Component {
   }
 
   checkUserRole(cell, row, enumObject, rowIndex) {
-    return (this.props.getUser.user) && (this.props.getUser.user.roleName === "Parent");
+    return (this.props.getUser.user) && (this.props.getUser.user.roleName.split(",").includes("Parent"));
   }
 
   contentFormatter(cell, row, enumObject, rowIndex) {

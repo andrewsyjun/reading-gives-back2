@@ -160,8 +160,8 @@ mutation updateMultiplier($bookId: ID!, $multiplier: Int!) {
 `;
 
 const updatePagesRead = gql`
-mutation updatePagesRead($bookId: ID!, $pagesRead: Int!) {
-  updatePagesRead(bookId: $bookId, pagesRead: $pagesRead) {
+mutation updatePagesRead($bookId: ID!, $pagesRead: Int!, $familyGroupid: String!) {
+  updatePagesRead(bookId: $bookId, pagesRead: $pagesRead, familyGroupId: $familyGroupId) {
     id
     pagesRead
   }
@@ -390,6 +390,31 @@ mutation addTaskMutation($taskName: String!, $points: Int!, $userId: String!, $a
 }
 `;
 
+const addUserMutation = gql`
+mutation addUserMutation($name: String!, $userName: String!, $roleName: String!, $bod: String, $familyGroupId: String ) {
+  addUserMutation(name: $name, userName: $userName, roleName: $roleName, bod: $bod, familyGroupId: $familyGroupId) {
+    id
+    name
+    userName
+    roleName
+    bod
+    familyGroupId
+  }
+}
+`;
+
+const addFamilyGroupMutation = gql`
+mutation addFamilyGroupMutation($name: String!, $lastName: String!, $address: String!, $contactNumber: String) {
+  addFamilyGroupMutation(name: $name, lastName: $lastName, address: $address, contactNumber: $contactNumber) {
+    id
+    name
+    lastName
+    address
+    contactNumber
+  }
+}
+`;
+
 const deactivateTask = gql`
 mutation deactivateTask($taskId: ID!, $userId: String!) {
   deactivateTask(taskId: $taskId, userId: $userId) {
@@ -460,6 +485,41 @@ query getAgeGroups {
 }
 `;
 
+const getFamilyGroups = gql`
+query getFamilyGroups {
+  familyGroups {
+    id
+    name
+    lastName
+    address
+    contactNumber
+  }
+}
+`;
+
+const getUserList = gql`
+query getUserList {  
+  users {
+    id
+    name
+    userName
+    roleName
+    bod
+    familyGroup {
+      id
+      name
+      lastName
+      address
+    }
+    ageGroups {
+      name
+      beginAge
+      endAge
+    }
+  }
+}
+`;
+
 export {
   getUser, getReadingLogQuery, addReadingLogMutation, updatePagesRead, removeBookFromMyReadingLog,
   redeemBookRead, getRedeemedBooksQuery, saveReview, getBookReview, updateMultiplier, undoRedeemBookRead,
@@ -467,5 +527,5 @@ export {
   addTaskMutation, getActiveTasksQuery, getInActiveTasksQuery, activateTask, deactivateTask, getTaskQuery,
   getContributionList, getRedeemedContributionList, deleteTaskMutation, useRedeemedBookTime, useRedeemedContributionTime,
   getUsedTimeFromContributions, getUsedTimeFromBooks, approveBookRead, getReviewReadyItems, getReaders, getUsedTimeFromContributionsById,
-  getAgeGroups
+  getAgeGroups, getFamilyGroups, getUserList, addUserMutation, addFamilyGroupMutation
 };

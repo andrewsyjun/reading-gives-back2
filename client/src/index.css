@@ -336,6 +336,15 @@ div.tast-list-container {
   background-size: cover;
 }
 
+div.admin-container {
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  background-color: blue;
+  background-size: cover;
+  color: white;
+}
+
 #task-list{
   padding: 20px;
   width: 55%;
@@ -522,6 +531,25 @@ body{
 table.table-contributions {
   table-layout: fixed;
   width: 100%;
+}
+
+table.user-content {
+  table-layout: fixed;
+  width: 100%;
+  font-family: 'Trebuchet MS';
+  font-size: 14px;
+  font-variant: small-caps;
+}
+
+div.family-content {
+  table-layout: fixed;
+  width: 100%;
+  font-family: 'Trebuchet MS';
+  font-size: 14px;
+  font-variant: small-caps;
+  border: 2px;
+  border-color: black;
+  
 }
 
 td.task-title {

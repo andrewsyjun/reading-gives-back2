@@ -229,6 +229,16 @@ class ReviewPage extends Component {
   }
 
   render() {
+
+    if (this.props.getUser.loading) {
+      return <div>Loading...</div>
+    }
+
+
+    if (!this.props.getUser.user.roleName.split(",").includes("Parent")) {
+      return <div>You don't have access to this page</div>
+    }
+
     const taskTitle = (this.state.readerId && this.state.readerId !== "") ?
       (
         <h3>Here are the contributions from: {this.state.readerName}</h3>
@@ -304,7 +314,7 @@ class ReviewPage extends Component {
   }
 
   isParent() {
-    return (this.props.getUser.user.roleName === "Parent");
+    return (this.props.getUser.user.roleName.split(",").includes("Parent"));
   }
 
   dateFormatter(cell, row, enumObject, rowIndex) {
@@ -329,7 +339,7 @@ class ReviewPage extends Component {
   }
 
   checkUserRole(cell, row, enumObject, rowIndex) {
-    return this.props.getUser.user.roleName === "Parent";
+    return (this.props.getUser.user.roleName.split(",").includes("Parent"));
   }
 
 

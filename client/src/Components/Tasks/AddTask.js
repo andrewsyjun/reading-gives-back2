@@ -33,8 +33,12 @@ class AddTask extends Component {
 
 
   submitForm(e) {
-    e.preventDefault()
-    // use the addTaskMutation
+    e.preventDefault();
+    if (this.state.ageGroupId === "" || this.state.ageGroupId === "-1") {
+      alert("Please select age group for this task");
+      return;
+    }
+
     this.props.addTaskMutation({
       variables: {
         taskName: this.state.taskName,
@@ -62,6 +66,7 @@ class AddTask extends Component {
         <div className="task-field">
           <label className="task-field">Age Group:</label>
           <select className="task-field" type="text" onChange={(evt) => this.setState({ ageGroupId: evt.target.value })}>
+            <option value="-1">--Select--</option>
             {this.displayAgeGroupOptions()}
           </select>
         </div>

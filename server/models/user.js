@@ -5,7 +5,7 @@ const userSchema = new Schema({
   name: String,
   userName: String,
   roleName: String,
-  bod: String,
+  dob: String,
   familyGroupId: String,
   createdDt: String
 });

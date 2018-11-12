@@ -77,9 +77,9 @@ aggregate([
 
         return User.findOne({ userName: args.userName })
           .then(function (res) {
-            let bodYear = new Date(res.bod).getYear();
+            let dobYear = new Date(res.dob).getYear();
             let currYear = new Date().getYear();
-            let age = 15;//currYear - bodYear;
+            let age = 15;//currYear - dobYear;
             return AgeGroup.find({
               $or: [
                 { $and: [{ beginAge: { $lte: age } }, { endAge: { $gte: age } }] },

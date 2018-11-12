@@ -186,7 +186,7 @@ class ReviewPage extends Component {
     return (
       <BootstrapTable keyField='id' data={books} columns={columns} defaultSorted={defaultSorted}
         pagination={paginationFactory(options)} filter={filterFactory()}
-        rowStyle={{ fontSize: '12px' }}
+        rowStyle={{ fontSize: '18px' }}
         cellEdit={cellEditFactory({
           mode: 'click',
           blurToSave: true,
@@ -284,7 +284,7 @@ class ReviewPage extends Component {
               if (error) return <div>Error</div>
 
               return (
-                <div>
+                <div className="review-task-list">
                   <br /><br />
                   {taskTitle}
                   {this.displayTasks(data)}

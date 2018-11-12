@@ -46,7 +46,7 @@ const UserType = new GraphQLObjectType({
     name: { type: GraphQLString },
     userName: { type: GraphQLString },
     roleName: { type: GraphQLString },
-    bod: { type: GraphQLString },
+    dob: { type: GraphQLString },
     familyGroupId: { type: GraphQLString },
     familyGroup: {
       type: new GraphQLList(FamilyGroupType),
@@ -57,7 +57,7 @@ const UserType = new GraphQLObjectType({
     ageGroups: {
       type: new GraphQLList(AgeGroupType),
       resolve(parent, args) {
-        let age = new Date().getYear() - new Date(parent.bod).getYear();
+        let age = new Date().getYear() - new Date(parent.dob).getYear();
         return AgeGroup.find({
           $or: [
             {
@@ -251,11 +251,12 @@ const RootQuery = new GraphQLObjectType({
             let role = res.roleName;
             console.log("getActiveTasksQuery: role = " + role);
             if (role.split(",").includes("Parent")) {
+              console.log("in getActiveTasksQuery: familyGroupId = " + args.familyGroupId)
               return Task.find({ isActive: true, familyGroupId: args.familyGroupId });
             } else {
-              let bodYear = new Date(res.bod).getYear();
+              let dobYear = new Date(res.dob).getYear();
               let currYear = new Date().getYear();
-              let age = currYear - bodYear;
+              let age = currYear - dobYear;
               return AgeGroup.find({
                 $or: [
                   { $and: [{ beginAge: { $lte: age } }, { endAge: { $gte: age } }] },
@@ -365,7 +366,7 @@ const RootQuery = new GraphQLObjectType({
       resolve(parent, args) {
         return User.findOne({ userName: args.userName })
           .then(function (res) {
-            return Contribution.find({ userId: res.id, redeemed: true, used: false }).sort({ createdDt: 1 });
+            return Contribution.find({ userId: res.id, redeemed: true, used: false }).sort({ redeemedDt: 1 });
           })
       }
     },
@@ -424,7 +425,7 @@ const Mutation = new GraphQLObjectType({
         name: { type: GraphQLString },
         userName: { type: GraphQLString },
         roleName: { type: GraphQLString },
-        bod: { type: GraphQLString },
+        dob: { type: GraphQLString },
         familyGroupId: { type: GraphQLString }
       },
       resolve(parent, args) {
@@ -434,7 +435,7 @@ const Mutation = new GraphQLObjectType({
           name: args.name,
           userName: args.userName,
           roleName: roles,
-          bod: args.bod,
+          dob: args.dob,
           familyGroupId: args.familyGroupId,
           createdDt: new Date()
         });
@@ -487,6 +488,7 @@ const Mutation = new GraphQLObjectType({
         familyGroupId: { type: GraphQLString }
       },
       resolve(parent, args) {
+        console.log("in addTaskMutation: taskName = " + args.taskName + "; points = " + args.points + "; userId = " + args.userId + "; ageGroupId = " + args.ageGroupId + "; familyGroupId = " + args.familyGroupId);
         let task = new Task({
           taskName: args.taskName,
           points: args.points,

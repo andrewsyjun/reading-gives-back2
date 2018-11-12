@@ -4,14 +4,22 @@ import {
   getFamilyGroups, getUser, addFamilyGroupMutation
 } from '../../queries/queries';
 
+import FormErrors from '../Error/FormErrors';
+
 class Family extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
+      familyName: "",
       lastName: "",
       address: "",
-      contactNumber: ""
+      contactNumber: "",
+      formErrors: { familyName: "", lastName: "", address: "", contactNumber: "" },
+      familyNameValid: false,
+      lastNameValid: false,
+      addressValid: false,
+      contactNumberValid: false,
+      formValid: false
     };
   }
 
@@ -23,14 +31,14 @@ class Family extends Component {
       let groups = this.props.getFamilyGroups.familyGroups;
       if (groups) {
         return (
-          <React.Fragment>
+          <table className="family-content">
             <thead>
               {this.displayHeader()}
             </thead>
             <tbody>
               {this.displayBody(groups)}
             </tbody>
-          </React.Fragment>
+          </table>
         )
       } else {
         return (
@@ -59,7 +67,7 @@ class Family extends Component {
         return (
           <React.Fragment key={group.id + "_fragment"}>
             <tr>
-              <td id={group.id + "_name"} width="15%" key={group.id + "_name"} >{group.name}</td>
+              <td id={group.id + "_familyName"} width="15%" key={group.id + "_familyName"} >{group.name}</td>
               <td id={group.id + "_lastName"} width="20%" key={group.id + "_lastName"} >{group.lastName}</td>
               <td id={group.id + "_address"} width="40%" key={group.id + "_address"} >{group.address}</td>
               <td id={group.id + "_contactNumber"} width="25%" key={group.id + "_contactNumber"} >{group.contactNumber}</td>
@@ -74,7 +82,7 @@ class Family extends Component {
     evt.preventDefault();
     this.props.addFamilyGroupMutation({
       variables: {
-        name: this.state.name,
+        name: this.state.familyName,
         lastName: this.state.lastName,
         address: this.state.address,
         contactNumber: this.state.contactNumber
@@ -95,30 +103,88 @@ class Family extends Component {
     }
 
     return (
-      <form onSubmit={this.handleOnSubmit.bind(this)} >
-        <table >
-          {this.displayFamilyGroups()}
-        </table>
+      <form onSubmit={this.handleOnSubmit.bind(this)} className="admin-container">
+        <div className="panel panel-default">
+          <FormErrors formErrors={this.state.formErrors} />
+        </div>
+        {this.displayFamilyGroups()}
         <br />
-        <br />
-        <div className="family-content">
-          <label className="task-field">Name:</label><input id="name" onChange={(evt) => this.setState({ name: evt.target.value })}></input><br />
-          <label className="task-field">Last Name:</label><input id="lastName" onChange={(evt) => this.setState({ lastName: evt.target.value })}></input><br />
-          <label className="task-field">Address:</label><input id="address" onChange={(evt) => this.setState({ address: evt.target.value })}></input><br />
-          <label className="task-field">Contact Number:</label><input id="contactNumber" onChange={(evt) => this.setState({ contactNumber: evt.target.value })}></input><br />
+        <div className={`form-group ${this.errorClass(this.state.formErrors.familyName)}`}>
+          <label className="admin-task-field" htmlFor="familyName">Name:</label><input id="familyName" value={this.state.familyName} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" className="admin-input-field" />
+        </div>
+        <div className={`form-group ${this.errorClass(this.state.formErrors.lastName)}`}>
+          <label className="admin-task-field" htmlFor="lastName">Last Name:</label><input id="lastName" value={this.state.lastName} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
+        </div>
+        <div className={`form-group ${this.errorClass(this.state.formErrors.address)}`}>
+          <label className="admin-task-field" htmlFor="address">Address:</label><input id="address" value={this.state.address} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
+        </div>
+        <div className={`form-group ${this.errorClass(this.state.formErrors.contactNumber)}`}>
+          <label className="admin-task-field" htmlFor="contactNumber">Contact Number:</label><input id="contactNumber" value={this.state.contactNumber} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
         </div>
         <div>
-          <button onClick={(evt) => this.handleAddFamily(evt)} type="submit">Add Family</button>
+          <button onClick={(evt) => this.handleAddFamily(evt)} type="submit" className="btn btn-primary" disabled={!this.state.formValid}>Add Family</button>
         </div>
-      </form>
+      </form >
 
     )
+  }
+
+  handleUserInput(evt) {
+    let name = evt.target.id;
+    let value = evt.target.value;
+    this.setState({ [name]: value },
+      () => { this.validateField(name, value) });
+  }
+
+  validateField(fieldName, value) {
+    let fieldValidationErrors = this.state.formErrors;
+    let familyNameValid = this.state.familyNameValid;
+    let lastNameValid = this.state.lastNameValid;
+    let addressValid = this.state.addressValid;
+    let contactNumberValid = this.state.contactNumberValid;
+
+    switch (fieldName) {
+      case "familyName":
+        familyNameValid = value.length > 0;
+        fieldValidationErrors.familyName = familyNameValid ? "" : " cannot be empty";
+        break;
+      case "lastName":
+        lastNameValid = value.length > 0;
+        fieldValidationErrors.lastName = lastNameValid ? "" : " cannot be empty";
+        break;
+      case "address":
+        addressValid = value.length > 0;
+        fieldValidationErrors.address = addressValid ? "" : " cannot be empty";
+        break;
+      case "contactNumber":
+        contactNumberValid = value.length > 0;
+        fieldValidationErrors.contactNumber = contactNumberValid ? "" : " cannot be empty";
+        break;
+      default:
+        break;
+    }
+    this.setState({
+      formErrors: fieldValidationErrors,
+      familyNameValid: familyNameValid,
+      lastNameValid: lastNameValid,
+      addressValid: addressValid,
+      contactNumberValid: contactNumberValid
+    }, this.validateForm);
   }
 
 
   handleOnSubmit = (evt) => {
     evt.preventDefault();
   }
+
+  errorClass(error) {
+    return (error.length === 0 ? "" : "has-error");
+  }
+
+  validateForm() {
+    this.setState({ formValid: this.state.familyNameValid && this.state.lastNameValid && this.state.addressValid && this.state.contactNumberValid });
+  }
+
 }
 
 export default compose(

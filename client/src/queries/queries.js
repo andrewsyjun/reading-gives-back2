@@ -377,8 +377,8 @@ mutation addContributionMutation($title: String!, $userId: String!, $multiplier:
 `;
 
 const addTaskMutation = gql`
-mutation addTaskMutation($taskName: String!, $points: Int!, $userId: String!, $ageGroupId: String) {
-  addTaskMutation(taskName: $taskName, points: $points, userId: $userId, ageGroupId: $ageGroupId) {
+mutation addTaskMutation($taskName: String!, $points: Int!, $userId: String!, $ageGroupId: String, $familyGroupId: String) {
+  addTaskMutation(taskName: $taskName, points: $points, userId: $userId, ageGroupId: $ageGroupId, familyGroupId: $familyGroupId) {
     id
     taskName
     points
@@ -391,13 +391,13 @@ mutation addTaskMutation($taskName: String!, $points: Int!, $userId: String!, $a
 `;
 
 const addUserMutation = gql`
-mutation addUserMutation($name: String!, $userName: String!, $roleName: String!, $bod: String, $familyGroupId: String ) {
-  addUserMutation(name: $name, userName: $userName, roleName: $roleName, bod: $bod, familyGroupId: $familyGroupId) {
+mutation addUserMutation($name: String!, $userName: String!, $roleName: String!, $dob: String, $familyGroupId: String ) {
+  addUserMutation(name: $name, userName: $userName, roleName: $roleName, dob: $dob, familyGroupId: $familyGroupId) {
     id
     name
     userName
     roleName
-    bod
+    dob
     familyGroupId
   }
 }
@@ -504,7 +504,7 @@ query getUserList {
     name
     userName
     roleName
-    bod
+    dob
     familyGroup {
       id
       name

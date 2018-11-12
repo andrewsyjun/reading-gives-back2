@@ -91,7 +91,7 @@ class TaskList extends Component {
     } else {
       addTaskPane = (this.props.getUser.user.roleName.split(",").includes("Parent")) ?
         (
-          <AddTask taskId={this.state.selected} userId={this.props.getUser.user.id} userName={this.props.userName} familyGroupId={this.props.getUser.user.familyGroupid} />
+          <AddTask taskId={this.state.selected} userId={this.props.getUser.user.id} userName={this.props.userName} familyGroupId={this.props.getUser.user.familyGroupId} />
         ) : (
           <div className="add-button-div" />
         );

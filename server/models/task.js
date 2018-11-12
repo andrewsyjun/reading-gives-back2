@@ -7,7 +7,8 @@ const taskSchema = new Schema({
   isActive: Boolean,
   createdById: String,
   createdDt: String,
-  ageGroupId: String
+  ageGroupId: String,
+  familyGroupId: String
 });
 
 module.exports = mongoose.model('Task', taskSchema);

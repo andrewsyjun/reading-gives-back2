@@ -244,7 +244,7 @@ class MyReadingLog extends Component {
 
               <BootstrapTable keyField='id' data={books} columns={columns} defaultSorted={defaultSorted}
                 pagination={paginationFactory(options)} filter={filterFactory()}
-                rowStyle={{ fontSize: '12px' }}
+                rowStyle={{ fontSize: '16px', fontFamily: 'Trebuchet MS', fontVariant: 'small-caps' }}
                 cellEdit={cellEditFactory({
                   mode: 'click',
                   blurToSave: true,

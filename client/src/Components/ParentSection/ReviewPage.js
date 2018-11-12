@@ -156,7 +156,7 @@ class ReviewPage extends Component {
         sort: false,
         headerSortingStyle,
         headerStyle: (colum, colIndex) => {
-          return { width: '5%', textAlign: 'left', fontSize: '18px' };
+          return { width: '6%', textAlign: 'left', fontSize: '16px' };
         },
         editable: true,
         validator: (newValue, row, column) => {
@@ -186,7 +186,7 @@ class ReviewPage extends Component {
     return (
       <BootstrapTable keyField='id' data={books} columns={columns} defaultSorted={defaultSorted}
         pagination={paginationFactory(options)} filter={filterFactory()}
-        rowStyle={{ fontSize: '18px' }}
+        rowStyle={{ fontSize: '16px', fontFamily: 'Trebuchet MS', fontVariant: 'small-caps' }}
         cellEdit={cellEditFactory({
           mode: 'click',
           blurToSave: true,

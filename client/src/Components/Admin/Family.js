@@ -109,20 +109,22 @@ class Family extends Component {
         </div>
         {this.displayFamilyGroups()}
         <br />
-        <div className={`form-group ${this.errorClass(this.state.formErrors.familyName)}`}>
-          <label className="admin-task-field" htmlFor="familyName">Name:</label><input id="familyName" value={this.state.familyName} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" className="admin-input-field" />
-        </div>
-        <div className={`form-group ${this.errorClass(this.state.formErrors.lastName)}`}>
-          <label className="admin-task-field" htmlFor="lastName">Last Name:</label><input id="lastName" value={this.state.lastName} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
-        </div>
-        <div className={`form-group ${this.errorClass(this.state.formErrors.address)}`}>
-          <label className="admin-task-field" htmlFor="address">Address:</label><input id="address" value={this.state.address} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
-        </div>
-        <div className={`form-group ${this.errorClass(this.state.formErrors.contactNumber)}`}>
-          <label className="admin-task-field" htmlFor="contactNumber">Contact Number:</label><input id="contactNumber" value={this.state.contactNumber} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
-        </div>
-        <div>
-          <button onClick={(evt) => this.handleAddFamily(evt)} type="submit" className="btn btn-primary" disabled={!this.state.formValid}>Add Family</button>
+        <div className="admin-container">
+          <div>
+            <label className="admin-task-field" htmlFor="familyName">Name:</label><input id="familyName" value={this.state.familyName} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
+          </div>
+          <div>
+            <label className="admin-task-field" htmlFor="lastName">Last Name:</label><input id="lastName" value={this.state.lastName} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
+          </div>
+          <div>
+            <label className="admin-task-field" htmlFor="address">Address:</label><input id="address" value={this.state.address} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
+          </div>
+          <div>
+            <label className="admin-task-field" htmlFor="contactNumber">Contact Number:</label><input id="contactNumber" value={this.state.contactNumber} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
+          </div>
+          <div>
+            <button onClick={(evt) => this.handleAddFamily(evt)} type="submit" className="admin-add-button" disabled={!this.state.formValid}>Add Family</button>
+          </div>
         </div>
       </form >
 

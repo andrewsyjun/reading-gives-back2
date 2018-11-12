@@ -13,7 +13,7 @@ class MyContributionContainer extends Component {
 
   render() {
     return (
-      <div className="admin-container">
+      <div>
         <h2>Users</h2>
         <User userName={this.state.userName} />
         <br />

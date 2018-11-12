@@ -118,31 +118,33 @@ familyGroup
           {this.displayUsers()}
         </div>
         <br />
-        <div className={`form-group ${this.errorClass(this.state.formErrors.memberName)}`}>
-          <label className="admin-task-field">Name:</label><input id="memberName" value={this.state.memberName} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
-        </div>
-        <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
-          <label className="admin-task-field">Email:</label><input id="email" value={this.state.email} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
-        </div>
-        <div className={`form-group ${this.errorClass(this.state.formErrors.dob)}`}>
-          <label className="admin-task-field">Date of Birth:</label><input id="dob" type="date" value={this.state.dob} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
-        </div>
-        <div className={`form-group ${this.errorClass(this.state.formErrors.familyGroupId)}`}>
-          <label className="admin-task-field">Family:</label>
-          <select id="familyGroupId" value={this.state.familyGroupId} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field">
-            <option value="-1">--Select--</option>
-            {this.displayFamilyGroupOptions()}
-          </select>
-        </div>
-        <div className={`form-group ${this.errorClass(this.state.formErrors.roleName)}`}>
-          <label className="admin-task-field">Role:</label>
-          <select id="roleName" value={this.state.roleName} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field">
-            <option value="-1">--Select--</option>
-            {this.displayRoleOptions()}
-          </select>
-        </div>
-        <div>
-          <button onClick={(evt) => this.handleAddUser(evt)} type="submit" className="btn btn-primary" disabled={!this.state.formValid}>Add User</button>
+        <div className="admin-container">
+          <div>
+            <label className="admin-task-field">Name:</label><input id="memberName" value={this.state.memberName} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
+          </div>
+          <div>
+            <label className="admin-task-field">Email:</label><input id="email" value={this.state.email} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
+          </div>
+          <div>
+            <label className="admin-task-field">Date of Birth:</label><input id="dob" type="date" value={this.state.dob} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field" />
+          </div>
+          <div>
+            <label className="admin-task-field">Family:</label>
+            <select id="familyGroupId" value={this.state.familyGroupId} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field">
+              <option value="-1">--Select--</option>
+              {this.displayFamilyGroupOptions()}
+            </select>
+          </div>
+          <div>
+            <label className="admin-task-field">Role:</label>
+            <select id="roleName" value={this.state.roleName} onChange={(evt) => this.handleUserInput(evt)} className="admin-input-field">
+              <option value="-1">--Select--</option>
+              {this.displayRoleOptions()}
+            </select>
+          </div>
+          <div>
+            <button onClick={(evt) => this.handleAddUser(evt)} type="submit" className="admin-add-button" disabled={!this.state.formValid}>Add User</button>
+          </div>
         </div>
       </form >
 

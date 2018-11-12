@@ -10,7 +10,7 @@ div.content-pane {
 
 div.review-task-list {
   font-family: 'Trebuchet MS';
-  font-size: 24px;
+  font-size: 20px;
 
 }
 
@@ -21,7 +21,7 @@ div.review-content-pane {
   font-family: 'Trebuchet MS';
   font-size: 14px;
   font-variant: small-caps;
-  color: white;
+  color: black;
 }
 
 p.history-title {
@@ -55,11 +55,20 @@ div.history-content{
   color: white;
 }
 
+div.review-content{
+  margin-left: 40px;
+  margin-right: 40px;
+  font-family: 'Trebuchet MS';
+  font-size: 14px;
+  font-variant: small-caps;
+  color: black;
+}
+
 a.review-book-title {
   font-family: 'Trebuchet MS';
   font-size: 14px;
   font-variant: small-caps;
-  color: white;
+  color: black;
 }
 
 .history-link {
@@ -106,7 +115,6 @@ div.reading-log-container{
 }
 
 div.apoproval-container {
-  background-color: blue;
   background-size: cover;
   font-family: 'Trebuchet MS';
   font-size: 20px;
@@ -392,7 +400,7 @@ div.add-button{
 .show-approved {
   cursor: pointer;
   font-family: 'Trebuchet MS';
-  color: white;
+  color: black;
   font-size: 22px;
   font-style: bold;
 }
@@ -400,7 +408,7 @@ div.add-button{
 label.show-approved {
   cursor: pointer;
   font-family: 'Trebuchet MS';
-  color: white;
+  color: black;
   font-size: 22px;
   font-style: bold;
   margin-left: 10px;
@@ -607,7 +615,7 @@ td.task-delete-button {
   float: none;
 }
 
-.page-item.active .page-link {
+li.page-item.active .page-link {
   color: #6c757d;
   cursor: auto;
   background-color: #fff;
@@ -625,18 +633,21 @@ form.admin-container {
   padding: 20px;
   width: 100%;
   height: 100%;
-  background-size: cover;
 }
 
 div.admin-container {
-  padding: 20px;
-  width: 100%;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 60px;
+  width: 90%;
   height: 100%;
   background-size: cover;
+  border: black;
+  border-style: solid;
 }
 
 input.admin-input-field {
-  width: 25pc;
+  width: 22pc;
   position: absolute;
   left: 200px;
   box-sizing: border-box;
@@ -646,7 +657,8 @@ input.admin-input-field {
 }
 
 select.admin-input-field {
-  width: 25pc;
+  width: 15pc;
+  height: 25px;
   position: absolute;
   left: 200px;
   font-family: 'Trebuchet MS';
@@ -660,4 +672,11 @@ label.admin-task-field {
   font-variant: small-caps;
   text-align: left;
   padding-right: 10px;
+}
+
+button.admin-add-button {
+  font-family: 'Trebuchet MS';
+  font-size: 14px;
+  position: absolute;
+  left: 200px;
 }

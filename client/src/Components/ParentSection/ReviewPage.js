@@ -205,7 +205,7 @@ class ReviewPage extends Component {
       return (
         tasks.map((task, index) => {
           return (
-            <div key={task.id} className="history-content">{index + 1}. {task.title}, {task.redeemedPoints} token(s), redeemed on {new Date(task.redeemedDt).toLocaleDateString()} {(task.usedDt) ? " and used on " + new Date(task.usedDt).toLocaleDateString() : ""}</div>
+            <div key={task.id} className="review-content">{index + 1}. {task.title}, {task.redeemedPoints} token(s), redeemed on {new Date(task.redeemedDt).toLocaleDateString()} {(task.usedDt) ? " and used on " + new Date(task.usedDt).toLocaleDateString() : ""}</div>
           )
         })
       )

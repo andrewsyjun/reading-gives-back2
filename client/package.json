@@ -15,7 +15,7 @@
     "husky": "^1.1.0",
     "jquery": "^3.3.1",
     "lint-staged": "^7.3.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "mdbreact": "^4.8.0",
     "prettier": "^1.14.3",
     "react": "^16.5.2",
